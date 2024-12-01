@@ -7,4 +7,4 @@ using snapshot testing
 
 |day|part 1|part 2|
 |--|-- |--|
-|01|✓||
+|01|✓|✓|

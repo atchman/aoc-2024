@@ -15,6 +15,7 @@ import (
 
 func main() {
 	// read file
+	//file, err := os.Open("input.sample")
 	file, err := os.Open("input")
 	if err != nil {
 		log.Fatalf("open file error: %v", err)
@@ -51,6 +52,7 @@ func main() {
 
 	// result
 	fmt.Println("Part 1:", part1(left, right))
+	fmt.Println("Part 2:", part2(left, right))
 }
 
 func part1(left []int, right []int) int {
@@ -67,4 +69,19 @@ func part1(left []int, right []int) int {
 		}
 	}
 	return total
+}
+
+func part2(left []int, right []int) int {
+	var score int = 0
+	for _, val := range left {
+		count := 0
+		for _, comp := range right {
+			if val == comp {
+				count = count + 1
+			}
+		}
+		score = score + (val * count)
+		count = 0
+	}
+	return score
 }
