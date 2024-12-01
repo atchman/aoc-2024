@@ -1,9 +1,6 @@
 package main
 
 import (
-	//"testing"
-	// "github.com/gkampitakis/go-snaps/snaps"
-
 	"bufio"
 	"fmt"
 	"log"
@@ -14,15 +11,21 @@ import (
 )
 
 func main() {
+	var left []int
+	var right []int
+
+	// result
+	left, right = parse("input")
+	fmt.Println("Part 1:", part1(left, right))
+	fmt.Println("Part 2:", part2(left, right))
+}
+
+func parse(input string) (left []int, right []int) {
 	// read file
-	//file, err := os.Open("input.sample")
-	file, err := os.Open("input")
+	file, err := os.Open(input)
 	if err != nil {
 		log.Fatalf("open file error: %v", err)
 	}
-
-	var left []int
-	var right []int
 
 	// line by line
 	scanner := bufio.NewScanner(file)
@@ -33,12 +36,12 @@ func main() {
 
 		num_left, err := strconv.Atoi(split[0])
 		if err != nil {
-			log.Fatalf("Convert left number as str to int:", err)
+			log.Fatalf("Convert left number as str to int: %v", err)
 		}
 
 		num_right, err := strconv.Atoi(split[1])
 		if err != nil {
-			log.Fatalf("convert right number as str to int:", err)
+			log.Fatalf("convert right number as str to int: %v", err)
 		}
 
 		left = append(left, num_left)
@@ -50,16 +53,14 @@ func main() {
 	}
 	file.Close()
 
-	// result
-	fmt.Println("Part 1:", part1(left, right))
-	fmt.Println("Part 2:", part2(left, right))
+	return left, right
 }
 
-func part1(left []int, right []int) int {
+func part1(left []int, right []int) (total int) {
 	sort.Ints(left)
 	sort.Ints(right)
 
-	var total int = 0
+	total = 0
 
 	for idx, val := range left {
 		if val >= right[idx] {
@@ -71,8 +72,8 @@ func part1(left []int, right []int) int {
 	return total
 }
 
-func part2(left []int, right []int) int {
-	var score int = 0
+func part2(left []int, right []int) (score int) {
+	score = 0
 	for _, val := range left {
 		count := 0
 		for _, comp := range right {
