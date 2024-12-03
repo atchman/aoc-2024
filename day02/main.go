@@ -12,6 +12,7 @@ import (
 func main() {
 	// result
 	fmt.Println("Part 1:", part1(parse("input")))
+	fmt.Println("Part 2:", part2(parse("input")))
 }
 
 func parse(input string) (reports [][]int) {
@@ -86,4 +87,67 @@ func part1(reports [][]int) (safe int) {
 		}
 	}
 	return safe
+}
+
+func part2(reports [][]int) (safe int) {
+	safe = 0
+	for _, report := range reports {
+		isSafe, idx := isSafeReport(report)
+
+		var try []int
+		if idx == -1 {
+			try = append(try, report[1:]...)
+			isSafe, idx = isSafeReport(try)
+		}
+		// isSafe if not
+		//again without value at index
+		// is Safe if not
+		if !isSafe {
+			try = append(report[:idx], report[idx+1:]...)
+			isSafe, idx = isSafeReport(try)
+		}
+		if !isSafe {
+			try = append(report[:idx+1], report[idx+2:]...)
+			isSafe, idx = isSafeReport(try)
+		}
+		if isSafe {
+			safe = safe + 1
+		}
+	}
+	return safe
+}
+
+func isSafeReport(report []int) (isSafe bool, index int) {
+	inc := true
+	diff := report[0] - report[1]
+	if diff == 0 {
+		return false, -1
+	}
+	if diff > 0 {
+		inc = false
+	}
+
+	isSafe = true
+	index = 0
+	for idx, level := range report {
+		if idx+1 < len(report) {
+			lvl_diff := level - report[idx+1]
+			if inc {
+				if lvl_diff < -3 || lvl_diff > -1 {
+					isSafe = false
+					index = idx
+					break
+				}
+			}
+			if !inc {
+				if lvl_diff < 1 || lvl_diff > 3 {
+					isSafe = false
+					index = idx
+					break
+				}
+			}
+		}
+
+	}
+	return isSafe, index
 }

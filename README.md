@@ -1,7 +1,9 @@
 # Advent of Code 2024
 
 learning go     
-using snapshot testing     
+testing
+
+    watchexec -r -e go -- go test
 
 # days
 
