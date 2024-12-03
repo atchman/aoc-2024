@@ -1,7 +1,7 @@
 # Advent of Code 2024
 
 learning go     
-testing
+testing          
 
     watchexec -r -e go -- go test
 
@@ -10,4 +10,4 @@ testing
 |day|part 1|part 2|
 |--|-- |--|
 |01|✓|✓|
-|02|✓||
+|02|✓|✓|
