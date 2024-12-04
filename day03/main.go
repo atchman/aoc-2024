@@ -61,7 +61,7 @@ func Two(mem string) (sum int) {
     sum = 0
 
     // disable regexp
-    dis, err := regexp.Compile(`don\'t\(\).*?(?:do\(\)|$)`)
+    dis, err := regexp.Compile(`(?s)don\'t\(\).*?(?:do\(\)|$)`)
     if err != nil {
         log.Fatalf("regexp dis: %v", err)
     }
@@ -95,6 +95,7 @@ func Two(mem string) (sum int) {
         if err != nil {
             log.Fatalf("convert str to int, b: %v", err)
         }
+
         sum = sum + (a * b)
     }
     return sum
