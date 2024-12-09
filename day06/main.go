@@ -10,7 +10,7 @@ import (
 func main() {
 	// result
 	fmt.Println("Part 1:", One(parseFile("input")))
-	//fmt.Println("Part 2:", Two(parseFile("input")))
+	fmt.Println("Part 2:", Two(parseFile("input")))
 }
 
 func parseFile(file_name string) (width int, height int, obst map[position]int, guard position) {
@@ -86,4 +86,34 @@ func One(width int, height int, obst map[position]int, guard position) int {
 		}
 	}
 	return len(visits)
+}
+
+// part two
+func Two(width int, height int, obst map[position]int, guard position) (positions int) {
+	positions = 0
+	visits := map[position]int{}
+	isInside := true
+	step := position{0, -1}
+	for isInside {
+		next_step := position{guard.row + step.row, guard.col + step.col}
+		// going outside
+		if next_step.row > width || next_step.col > height {
+			break
+		}
+
+		// obstruction found
+		if obst[next_step] > 0 {
+			step = rotate(step)
+			continue
+		}
+
+		// already visited
+		if visits[next_step] > 0 {
+			guard = next_step
+		} else {
+			visits[next_step] = 1
+			guard = next_step
+		}
+	}
+	return positions
 }
